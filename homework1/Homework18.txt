@@ -1,0 +1,72 @@
+package pack1;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import pack.Methods;
+
+class MyAt {
+	@Before
+	 public void before() {
+			System.out.println("This is Before");
+		}
+
+	@Test
+	public void test() {
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://www.booking.com");
+		driver.findElement(By.xpath(".//input[@placeholder=\"Куда вы хотите поехать?\"]")).sendKeys("Москва");
+		Methods method = new Methods();
+		method.findYourElement(".//span[@class=\"xp__guests__count\"]", driver);
+		method.findYourElement(".//select[@name = \"group_adults\"]", driver);
+		method.findYourElement("(.//option[@value=\"2\"])[2]", driver);
+		method.findYourElement("(.//option[@value=\"1\"])[1]", driver);
+		method.findYourElement("(.//button[@aria-label=\"Открыть календарь\"])[1]", driver);
+		method.findYourElement("(.//td[contains(text(),\"26\")])[1]", driver);
+		method.findYourElement("(.//td[contains(text(),\"20\")])[2]", driver);
+		method.findYourElement(".//span[text()=\"Проверить цены\"]", driver);
+		method.findYourElement(".//a[@data-category=\"review_score_and_price\"]", driver);
+		try {
+			   Thread.sleep(3000);
+			  } catch (InterruptedException e) {
+			   e.printStackTrace();
+			  }
+		boolean a;
+		if (Integer.parseInt(
+				driver.findElement(By.xpath(("(.//div[@class=\"bui-review-score__badge\"])[1]"))).getText()) >= 9) {
+			//System.out.println("Рейтинг отеля больше 9!");
+			a = true;
+		} else {
+			//System.out.println("Рейтинг отеля меньше 9!");
+			a=false;
+		}
+		
+		assertTrue(a);
+		
+	}
+	
+	@BeforeClass
+
+	static public void beforeClass() {
+		System.out.println("This is BeforeClass");
+	}
+
+	@AfterClass
+	static public void afterClass() {
+		System.out.println("This is AfterClass");
+	}
+
+	@After
+	 public void after() {
+		System.out.println("This is After");
+	}
+
+}
